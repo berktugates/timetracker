@@ -1,8 +1,7 @@
-import { Button, Input } from "antd";
 import React from "react";
 import Sign from "../forms/Sign";
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   return (
     <>
       <div
@@ -23,19 +22,19 @@ const Login: React.FC = () => {
             className=" w-full rounded-b-lg md:flex md:flex-col md:justify-center lg:basis-1/2"
           >
             <h1 className="text-white text-3xl font-medium mb-2 mt-2 xl:text-4xl">
-              Sign In
+              Create an account
             </h1>
             <h1 className="text-gray-300 text-xs lg:text-sm">
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <a href="/" className="text-[#9684c4] cursor-pointer underline">
-                Sign Up
+                Log in
               </a>
             </h1>
-            <Sign isRegister={false} />
+            <Sign isRegister ={true} />
           </div>
         </div>
       </div>
     </>
   );
 };
-export default Login;
+export default Register;
