@@ -13,6 +13,7 @@ import {
   Users,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { QRCode } from "antd";
 const Sidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
     const navigation = useNavigate();
@@ -154,6 +155,11 @@ const Sidebar: React.FC = () => {
           </div>
         </div>
         <div id="sidebar-2">
+          {isOpen && (
+            <div className="mb-8 flex items-center justify-center">
+              <QRCode value={"www.berktugberke.com" || '-'} />
+            </div>
+          )}
           {isOpen ? (
             <>
               <h1 className="flex items-center gap-x-2 mb-6 text-red-500">
