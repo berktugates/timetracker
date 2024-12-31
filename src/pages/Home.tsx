@@ -1,13 +1,20 @@
 import React, { useEffect } from "react";
-import UseTracker from "../hooks/UseTracker";
+import UseProject from "../hooks/UseProject";
 import Sidebar from "../components/Sidebar";
 import Tracker from "../components/Tracker";
 import { Dot, EllipsisVertical } from "lucide-react";
 import { Button, Popconfirm } from "antd";
 
-
 const Home: React.FC = () => {
-const {fetchProjects, fetchCompanies, formatTime, projects} = UseTracker()
+  const {
+    fetchProjects,
+    fetchCompanies,
+    formatTime,
+    projects,
+    deleteProjectHandler,
+    contextHolder,
+  } = UseProject();
+  
   useEffect(() => {
     fetchProjects();
     fetchCompanies();
@@ -15,10 +22,11 @@ const {fetchProjects, fetchCompanies, formatTime, projects} = UseTracker()
 
   return (
     <>
+      {contextHolder}
       <div id="root" className="flex h-screen">
         <Sidebar />
         <div id="context" className="bg-gray-100 w-full">
-          <Tracker/>
+          <Tracker />
           <div id="timelane" className="p-4  xl:w-2/3">
             <div
               id="weekly-info "
@@ -58,22 +66,31 @@ const {fetchProjects, fetchCompanies, formatTime, projects} = UseTracker()
                       </p>
                     </div>
                     <div className="flex flex-wrap gap-x-3">
-                      <h1 className={`flex text-xs items-center ${project.isfinished === true ? "text-green-500" : "text-red-500"}`}>
+                      <h1
+                        className={`flex text-xs items-center ${
+                          project.isfinished === true
+                            ? "text-green-500"
+                            : "text-red-500"
+                        }`}
+                      >
                         <Dot />{" "}
                         {project.isfinished ? "Completed" : "Not Completed"}
                       </h1>
                       <h1 className="flex text-xs items-center">
-                        {project.company_id}
+                        {project.company?.title}
                       </h1>
-                      <Popconfirm title="Are you sure to delete this track?"
+                      <Popconfirm
+                        title="Are you sure to delete this track?"
                         description="Delete the track."
                         okText="Yes"
                         cancelText="No"
-                        onConfirm={()=> console.log("yes tıklandı")}
+                        onConfirm={async() => {
+                            await deleteProjectHandler(project.id)
+                        }}
                       >
-                      <Button size="small">
-                        <EllipsisVertical size={15} />
-                      </Button>
+                        <Button size="small">
+                          <EllipsisVertical size={15} />
+                        </Button>
                       </Popconfirm>
                     </div>
                   </div>
