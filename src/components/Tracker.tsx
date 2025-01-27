@@ -49,7 +49,7 @@ const Tracker: React.FC = () => {
       >
         <Input
           className="h-16 border-0 rounded-none placeholder:font-semibold placeholder:text-gray-400"
-          placeholder="What are you working on?"
+          placeholder="What are you working on? | This is the demo project."
           value={newProject?.title}
           onChange={(e) =>
             setNewProject({ ...newProject, title: e.target.value })
