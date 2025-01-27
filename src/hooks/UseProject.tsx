@@ -20,7 +20,8 @@ const UseProject = () => {
     time: 0,
     created_at: new Date().toISOString(),
   });
-
+  const [isEdit, setIsEdit] = useState<any>(null);
+  const [editedTitle,setEditedTitle] = useState<string>("");
   const [messageApi, contextHolder] = message.useMessage();
 
   const addMessage = () => {
@@ -89,6 +90,20 @@ const UseProject = () => {
     }
   };
 
+  const editProjectHandler = async(id:number, text:string)=>{
+    try{
+      const response = await supabase.from("project").update({title:text}).eq('id', id)
+      if(response.status === 200){
+        await fetchProjects();
+        console.log("basariyla guncellendi");
+      }
+      setIsEdit(null);
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+
   const fetchCompanies = async () => {
     try {
       const response = await supabase.from("company").select();
@@ -116,7 +131,12 @@ const UseProject = () => {
     newProject,
     setNewProject,
     deleteProjectHandler,
+    editProjectHandler,
     contextHolder,
+    isEdit,
+    setIsEdit,
+    editedTitle,
+    setEditedTitle
   };
 };
 export default UseProject;

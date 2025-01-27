@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import UseProject from "../hooks/UseProject";
 import Sidebar from "../components/Sidebar";
 import Tracker from "../components/Tracker";
-import { Dot, EllipsisVertical } from "lucide-react";
-import { Button, Popconfirm } from "antd";
+import { Check, Dot, EllipsisVertical, Pen } from "lucide-react";
+import { Button, Input, Popconfirm } from "antd";
 
 const Home: React.FC = () => {
   const {
@@ -12,9 +12,14 @@ const Home: React.FC = () => {
     formatTime,
     projects,
     deleteProjectHandler,
+    editProjectHandler,
     contextHolder,
+    isEdit,
+    setIsEdit,
+    editedTitle,
+    setEditedTitle,
   } = UseProject();
-  
+
   useEffect(() => {
     fetchProjects();
     fetchCompanies();
@@ -60,7 +65,22 @@ const Home: React.FC = () => {
                     className="mt-2 p-2 flex flex-col items-center md:flex-row md:justify-between bg-gray-200 border border-gray-300 rounded-md"
                   >
                     <div>
-                      <h1 className="text-sm opacity-85">{project.title}</h1>
+                      <h1 className="text-sm opacity-85">
+                        {isEdit !== null && project.id === isEdit ? (
+                          <>
+                            <Input
+                              size="middle"
+                              onChange={(e) => {
+                                if (project.id === isEdit && isEdit !== "") {
+                                  setEditedTitle(e.target.value);
+                                }
+                              }}
+                            />
+                          </>
+                        ) : (
+                          <>{project.title}</>
+                        )}
+                      </h1>
                       <p className="text-[10px] text-gray-400">
                         {project.description}
                       </p>
@@ -76,6 +96,7 @@ const Home: React.FC = () => {
                         <Dot />{" "}
                         {project.isfinished ? "Completed" : "Not Completed"}
                       </h1>
+
                       <h1 className="flex text-xs items-center">
                         {project.company?.title}
                       </h1>
@@ -84,14 +105,26 @@ const Home: React.FC = () => {
                         description="Delete the track."
                         okText="Yes"
                         cancelText="No"
-                        onConfirm={async() => {
-                            await deleteProjectHandler(project.id)
+                        onConfirm={async () => {
+                          await deleteProjectHandler(project.id);
                         }}
                       >
                         <Button size="small">
                           <EllipsisVertical size={15} />
                         </Button>
                       </Popconfirm>
+                      <Button size="small">
+                        {isEdit && project.id === isEdit ? (
+                          <Check size={15} onClick={() =>
+                            editProjectHandler(project.id, editedTitle)
+                          } />
+                        ) : (
+                          <Pen
+                            size={15}
+                            onClick={() => setIsEdit(project.id)}
+                          />
+                        )}
+                      </Button>
                     </div>
                   </div>
                 </div>
