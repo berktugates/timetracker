@@ -157,7 +157,7 @@ const Sidebar: React.FC = () => {
         <div id="sidebar-2">
           {isOpen && (
             <div className="mb-8 flex items-center justify-center">
-              <QRCode value={"www.berktugberke.com" || '-'} />
+              <QRCode value={"berktugberke.com" || '-'} />
             </div>
           )}
           {isOpen ? (
