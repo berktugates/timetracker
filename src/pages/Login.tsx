@@ -1,4 +1,3 @@
-import { Button, Input } from "antd";
 import React from "react";
 import Sign from "../forms/Sign";
 
@@ -27,7 +26,7 @@ const Login: React.FC = () => {
             </h1>
             <h1 className="text-gray-300 text-xs lg:text-sm">
               Don't have an account?{" "}
-              <a href="/" className="text-[#9684c4] cursor-pointer underline">
+              <a href="/register" className="text-[#9684c4] cursor-pointer underline">
                 Sign Up
               </a>
             </h1>

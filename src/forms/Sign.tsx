@@ -1,20 +1,28 @@
-import { Button, Checkbox, Input } from "antd";
-import React, { useState } from "react";
-import { Eye, EyeClosed } from "lucide-react";
+import React from "react";
 import { ISign } from "../models/ISign";
+import { Button, Checkbox, Input } from "antd";
+import { Eye, EyeClosed } from "lucide-react";
+import UseAuth from "../hooks/UseAuth";
 
 const Sign: React.FC<ISign> = ({ isRegister }) => {
-  const [user, setUser] = useState<ISign>({
-    email: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [isEyeOpen, setIsEyeOpen] = useState<boolean>(false);
-
+  const {
+    user,
+    setUser,
+    isEyeOpen,
+    setIsEyeOpen,
+    isChecked,
+    setIsChecked,
+    handleSignHandler,
+    handleLoginHandler
+  } = UseAuth();
   return (
     <>
       <div id="form-division" className="mt-6">
-        <form action="" className="flex flex-col gap-y-4">
+        <form
+          action=""
+          onSubmit={handleSignHandler}
+          className="flex flex-col gap-y-4"
+        >
           <Input
             type="text"
             value={user.email}
@@ -85,7 +93,11 @@ const Sign: React.FC<ISign> = ({ isRegister }) => {
         </form>
         {isRegister && (
           <div className="flex items-center gap-x-3 mt-4">
-            <Checkbox className="" />
+            <Checkbox
+              className=""
+              checked={isChecked}
+              onChange={(e) => setIsChecked(e.target.checked)}
+            />
             <span className="text-white text-xs">
               I agree to the{" "}
               <a href="#" className="text-[#9684c4] cursor-pointer underline">
@@ -95,15 +107,29 @@ const Sign: React.FC<ISign> = ({ isRegister }) => {
           </div>
         )}
         <div className="flex justify-center mt-4">
-          <Button
-            color="danger"
-            type="default"
-            ghost={true}
-            htmlType="submit"
-            className="w-full bg-[#6e54b5] border border-[#6e54b5] text-white hover:bg-[#6041b5] md:h-10"
-          >
-            Create Account
-          </Button>
+          {isRegister ? (
+            <Button
+              onClick={handleSignHandler}
+              color="danger"
+              type="default"
+              ghost={true}
+              htmlType="submit"
+              className="w-full bg-[#6e54b5] border border-[#6e54b5] text-white hover:bg-[#6041b5] md:h-10"
+            >
+              Create Account
+            </Button>
+          ) : (
+            <Button
+              onClick={handleLoginHandler}
+              color="danger"
+              type="default"
+              ghost={true}
+              htmlType="submit"
+              className="w-full bg-[#6e54b5] border border-[#6e54b5] text-white hover:bg-[#6041b5] md:h-10"
+            >
+              Sign In
+            </Button>
+          )}
         </div>
       </div>
     </>
