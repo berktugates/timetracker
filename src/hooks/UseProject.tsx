@@ -1,13 +1,8 @@
 import { useState } from "react";
-import { createClient } from "@supabase/supabase-js";
+import supabase from "../helpers/supabaseClient";
 import { ITimelaneEvent } from "../models/ITimelineEvent";
 import { ICompany } from "../models/ITracker";
 import { message } from "antd";
-
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_KEY
-);
 
 const UseProject = () => {
   const [projects, setProjects] = useState<ITimelaneEvent[]>([]);
